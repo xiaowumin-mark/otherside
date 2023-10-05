@@ -1,0 +1,393 @@
+{{ define "town/admin.tmpl" }}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+    <script src="/static/code.jquery.com_jquery-3.7.0.min.js"></script>
+    <script src="/static/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/disk/css/chunk-60e5967e.38e33a11.css">
+    <link rel="stylesheet" href="/static/disk/css/chunk-vendors.31fb5458.css">
+    <link rel="stylesheet" href="/static/disk/css/home.0dfda365.css">
+    <style>
+        .sj {
+            width: 100%;
+            height: calc(100% - 60px);
+
+            margin-bottom: 40px;
+        }
+
+        .sjt {
+            width: 100%;
+            height: calc(100% - 10px);
+
+            margin-bottom: 5px;
+            overflow: auto;
+        }
+
+        .sjsj {
+            font-size: 50px;
+            /*设置文字大小*/
+            color: #3366FF;
+            /*设置文字颜色*/
+            text-shadow: 0 8px 10px #6699FF;
+            /*设置文字阴影*/
+            font-weight: bolder;
+            /*设置文字宽度*/
+            text-align: center;
+            /*设置文字居中*/
+
+        }
+
+        .c {
+            margin: 0 auto;
+            margin-top: 100px;
+
+        }
+
+        .a {
+            margin-top: 70px;
+            margin-left: 20px;
+            float: left;
+            overflow-y: auto
+        }
+
+        .topclick {
+            height: 50px;
+            width: 100px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .ltbox1 {
+            width: 100px;
+            height: 50px;
+            background-color: chartreuse;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            /*鼠标指针经过*/
+        }
+
+        .ltbox2 {
+            width: 100px;
+            height: 150px;
+            margin-top: 2px;
+            border-radius: 10px;
+            background-color: white;
+            position: absolute;
+            display: none;
+            /*使下拉菜单栏消失*/
+        }
+
+        .li1 {
+            margin-top: 10px;
+        }
+
+        .ltbox2 li {
+            height: 40px;
+            width: 100px;
+            text-align: center;
+            line-height: 40px;
+            display: block;
+            /*使下拉菜单栏显示*/
+        }
+
+        .ltbox2 li:hover {
+            background-color: #E8E8E8;
+        }
+
+        .topclick:hover .ltbox2 {
+            display: block;
+        }
+    </style>
+</head>
+
+<body style="overflow-y:hidden">
+
+
+    <nav class="navbar navbar-fixed-top navbar-expand-md bg-light navbar-nav collapse.navbar-collapse navbar-text"
+        style="position: fixed ;width: 100%; z-index: 289;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="/static/disk/logo.jpg" height="30px" alt=""></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#sj">数据</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#ppter">ppter审核</a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#UserList">UserList</a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#FileList">文件列表</a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <div id="sj" class="sj">
+        <br><br><br><br>
+        <h3 style="text-align: center;">数据统计</h3>
+        <div class="card c" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">访问量</h5>
+                <h6 class="card-subtitle mb-2 text-muted">数据</h6>
+                <h3 class="sjsj">{{.fw}}</h3>
+            </div>
+        </div>
+        <div class="card c" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">文件总下载量</h5>
+                <h6 class="card-subtitle mb-2 text-muted">下载量</h6>
+                <h3 class="sjsj">{{.ppt}}</h3>
+            </div>
+        </div>
+    </div>
+    <div id="ppter" class="sjt">
+        <br><br><br><br>
+        <h3 style="text-align: center;">ppter申请列表</h3>
+
+
+    </div>
+    <div id="UserList" class="sjt">
+        <br><br><br><br>
+        <h3 style="text-align: center;">ppter</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">账号</th>
+                    <th scope="col">密码</th>
+                    <th scope="col">邮箱</th>
+                    <th scope="col">操作</th>
+                </tr>
+            </thead>
+            <tbody id="ppterlist">
+
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+
+    <div id="FileList" class="sjt">
+        <br><br><br>
+        <h3 style="text-align: center;">文件列表</h3>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary" onclick="$('#up_file').modal('show');">上传文件</button>
+            <button type="button" class="btn btn-primary" onclick="$('#mkdir').modal('show');">新建文件夹</button>
+            <button type="button" class="btn btn-primary" onclick="GetFileList(getCookie('FilesAddAdmin'))">刷新文件列表</button>
+            </div>
+        <div class="wp-s-core-pan__contain  is-undefined-skin">
+            <div class="wp-s-core-pan__body is-show-header">
+                <div class="wp-s-core-pan__body-contain is-show-detail is-has-detail">
+                    <div class="wp-s-core-pan__body-contain--nav">
+                        <div class="wp-s-pan-file-main__nav list">
+                            <div class="wp-s-pan-file-main__nav-left">
+                                <div id="TopFileAdd"><span class="title">全部文件</span></div>
+                            </div>
+                            <div class="wp-s-pan-file-main__nav-right"><span
+                                    class="wp-s-pan-file-main__nav-right-count">
+
+                                </span> <span
+                                    class="wp-disk-popover-card-event__ref is-mode-pop is-web is-person is-default"><span
+                                        class="u-popover__reference-wrapper"><span
+                                            class="cursor-p wp-s-pan-file-main__nav-right-icon is-large inline-block-v-middle u-uicon u-popover__reference"
+                                            aria-describedby="u-popover-3063" tabindex="0"><i
+                                                class="u-uicon__font u-icon-view-list"></i></span>
+                                    </span></span></div>
+                        </div>
+                    </div>
+                    <div class="wp-s-core-pan__body-contain--list is-show-nav">
+                        <div class="wp-s-pan-list s-pan-list-loading">
+                            <div class="wp-s-pan-list__contain">
+                                <div class="wp-s-pan-table is-show-header">
+                                    <div class="wp-s-pan-table__header">
+                                        <table class="wp-s-pan-table__header-table">
+                                            <colgroup>
+                                                <col width="8%">
+                                                <col width="45%">
+                                                <col width="23%">
+                                                <col width="22%">
+                                            </colgroup>
+                                            <thead>
+                                                <tr class="wp-s-pan-table__header-row">
+                                                    <th class="wp-s-pan-table__header-select"><label
+                                                            class="u-checkbox"><span
+                                                                class="u-checkbox__input"></span></label>
+                                                    </th>
+                                                    <th class="wp-s-pan-table__header-th cursor-p is-name">
+                                                        <div class="text-ellip content inline-block-v-middle">
+                                                            <span>文件名</span>
+                                                            <div class="wp-s-pan-table__sort"><i
+                                                                    class="iconfont icon icon-arrow-up"
+                                                                    style="display: none;"></i><i
+                                                                    class="iconfont icon active icon-arrow-down"
+                                                                    style="display: none;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </th>
+                                                    <th class="wp-s-pan-table__header-th cursor-p">
+                                                        <div class="text-ellip content inline-block-v-middle">
+                                                            <span>修改时间</span>
+
+                                                        </div>
+                                                    </th>
+                                                    <th class="wp-s-pan-table__header-th cursor-p">
+                                                        <div class="text-ellip content inline-block-v-middle">
+                                                            <span>大小</span>
+                                                            <div class="wp-s-pan-table__sort"><i
+                                                                    class="iconfont icon icon-arrow-up"
+                                                                    style="display: none;"></i><i
+                                                                    class="iconfont icon active icon-arrow-down"
+                                                                    style="display: none;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="wp-s-pan-table__body mouse-choose-list">
+                                        <table class="wp-s-pan-table__body-table mouse-choose-box">
+                                            <colgroup>
+                                                <col width="8%">
+                                                <col width="45%">
+                                                <col width="23%">
+                                                <col width="22%">
+                                            </colgroup>
+                                            <tbody id="topmain">
+                                                
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wp-s-core-pan__body-detail">
+                    <div class="wp-s-core-pan__detail-slot">
+                        <section data-v-093a1112="" class="nd-detail nd-new-main-list__detail">
+                            <div data-v-093a1112="" class="nd-detail__title"><span data-v-093a1112="">
+                                    文件详情
+                                </span></div>
+                            <div id="showfile">
+                                <div data-v-093a1112="" class="nd-detail__empty"><img data-v-093a1112=""
+                                        src="https://nd-static.bdstatic.com/m-static/v20-main/home/img/empty-folder-new.ce4801de.png"
+                                        class="img">
+                                    <p data-v-093a1112="">选中文件/文件夹，查看详情</p>
+                                </div>
+                                <div data-v-093a1112=""></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="wp-s-core-pan__footer"></div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="up_file" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div id="ip_token_div" class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateImgModal-staticBackdropLabel">请上传新图片</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mx-3">
+                        <!-- 图片类型：gif、png、jpeg -->
+                        <input type="file" id="new-img" name="new_img" class="form-control mb-2" placeholder="支持所有文件">
+                        <span class="text-secondary text-opacity-50">
+                            <i class="fa fa-volume-down"></i>
+                            支持所有文件
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <!--执行上传操作，并关闭模态框-->
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        onclick="uploadNewImg()">上传</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="mkdir" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">请输入您要创建的文件名</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- 模态框内容 -->
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">dir</span>
+                        <input id="ip_mkdir" type="text" class="form-control" placeholder="文件夹名称" aria-label="通行证"
+                            aria-describedby="basic-addon1">
+                    </div>
+                    <button onclick="mkdir()" type="button" class="btn btn-primary">创建</button>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">关闭</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="position-fixed p-3 top-0 start-50 translate-middle-x" style="z-index: 100000">
+        <div id="liveToast" class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive"
+            aria-atomic="true" data-bs-delay="3000">
+            <div class="d-flex">
+                <div class="toast-body" id="Err_p">
+                 
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let z = "{{ .add }}"
+    let ym = "{{ .ym_add}}"
+    console.log(z+ym);
+</script>
+<script src="/static/disk/admin.js"></script>
+
+</html>
+{{end}}

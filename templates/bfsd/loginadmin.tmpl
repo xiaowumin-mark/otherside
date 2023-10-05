@@ -1,0 +1,131 @@
+{{ define "bfsd/loginadmin.tmpl" }}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+        }
+
+        .container {
+            height: 100%;
+            background-image: linear-gradient(to right, #fbc2eb, #a6c1ee);
+        }
+
+        .login-wrapper {
+            background-color: #fff;
+            width: 358px;
+            height: 588px;
+            border-radius: 15px;
+            padding: 0 50px;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .header {
+            font-size: 38px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 200px;
+        }
+
+        .head {
+            font-size: 38px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 200px;
+            color: red;
+        }
+
+        .input-item {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 0;
+            padding: 10px;
+            border-bottom: 1px solid rgb(128, 125, 125);
+            font-size: 15px;
+            outline: none;
+        }
+
+        .input-item:placeholder {
+            text-transform: uppercase;
+        }
+
+        .btn {
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            margin-top: 40px;
+            background-image: linear-gradient(to right, #a6c1ee, #fbc2eb);
+            color: #fff;
+        }
+
+        .msg {
+            text-align: center;
+            line-height: 88px;
+        }
+
+        a {
+            text-decoration-line: none;
+            color: #abc1ee;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="login-wrapper">
+            <div class="header">Login bfsd disk</div>
+            <div class="form-wrapper">
+                <input id="name" type="text" name="username" placeholder="username" class="input-item">
+                <input id="pwd" type="password" name="password" placeholder="password" class="input-item">
+
+                <button onclick="login()" class="btn">Login</button>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script src="/static/code.jquery.com_jquery-3.7.0.min.js"></script>
+<script>function login() {
+        Name = document.getElementById('name').value
+        pwd = document.getElementById('pwd').value
+        $.ajax({
+            url: "{{ .ym_add}}" + 'api/bfsd/loginadmin',
+            type: 'get',
+            data: { 'name': Name, 'pwd': pwd, },
+
+            success: function (res) {
+                console.log(res);
+                if (res.Err == 'false') {
+
+                    alert('账号或密码错误！')
+                } else {
+
+                    window.location.href = '{{.adderss}}/' + Name + '/' + pwd;
+
+                }
+            }
+        })
+    }</script>
+
+</html>
+{{end}}

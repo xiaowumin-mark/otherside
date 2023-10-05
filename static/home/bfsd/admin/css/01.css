@@ -1,0 +1,42 @@
+.disk_xcx_right {
+    height: 100%;
+    width: 50%;
+    float: left;
+}
+
+.disk_xcx_left {
+    height: 100%;
+    width: 50%;
+    overflow: auto;
+    float: left;
+}
+
+.sj {
+    width: 100%;
+    height: calc(100% - 60px);
+
+    margin-bottom: 40px;
+    overflow: auto;
+}
+
+.sjt {
+    width: 100%;
+    height: calc(100% - 10px);
+
+    margin-bottom: 5px;
+    overflow: auto;
+}
+
+#editor—wrapper {
+    border: 1px solid #ccc;
+    
+    /* 按需定义 */
+}
+
+#toolbar-container {
+    border-bottom: 1px solid #ccc;
+}
+
+#editor-container {
+    height: 300px;
+}

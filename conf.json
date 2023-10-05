@@ -1,0 +1,12 @@
+{
+    "db" : {
+        "db_user":"root",
+        "db_pwd":"123456",
+        "db_port":"3306",
+        "db_database":"otherside_go"
+    },
+    "townfile":"D:/xiaowumin more/go_kf/src/otherside/static/town",
+    "domainname":"localhost",
+    "port":"80",
+    "diskxcxicon":"D:/xiaowumin more/go_kf/src/otherside/static/home/img/disk_xcx_icon"
+}

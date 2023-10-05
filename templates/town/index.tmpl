@@ -1,0 +1,1197 @@
+{{ define "town/index.tmpl" }}
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <title>小镇网盘</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+
+
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+    <script src="/static/code.jquery.com_jquery-3.7.0.min.js"></script>
+
+
+    <link rel="shortcut icon" href="/static/disk/logo.jpg">
+
+    <style>
+        .bottom_up {
+
+            background-color: #96d5ff;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            background-image: url('/static/disk/up.svg');
+
+        }
+
+        .up_svg {
+            color: white;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            bottom: 55px;
+            right: 55px;
+        }
+
+        .up_svg:hover {
+            transform: rotate(45deg);
+            transition: 0.2s;
+        }
+
+        /* 下拉按钮 */
+        .dropbtn {
+            background-color: #96d5ff;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        /* 悬停 &获取焦点时的下拉按钮 */
+        .dropbtn:hover,
+        .dropbtn:focus {
+            background-color: #96d5ff;
+        }
+
+        /* 容器 <div> - 需要定位下拉内容 */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* 下拉内容（默认隐藏）*/
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        /* 下拉列表中的链接 */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* 更改悬停时下拉链接的颜色 */
+        .dropdown-content a:hover {
+            background-color: #ddd
+        }
+
+        /* 显示下拉菜单（当用户点击下拉按钮时，使用 JS 将此类添加到 .dropdown-content 容器中）*/
+        .show {
+            display: block;
+        }
+
+        #page {
+            box-sizing: border-box;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 200;
+            background: #fff;
+            display: none;
+            overflow: scroll;
+        }
+
+        #page {
+            height: 100%;
+        }
+
+        a {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #main-content {
+            max-width: 1068px;
+            width: 1068px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -178px 0 0 -534px;
+        }
+
+        #main-content.gt-four-browsers {
+            margin-top: -254px;
+        }
+
+        #art {
+            display: inline-block;
+            float: left;
+        }
+
+        #browsers {
+            display: inline-block;
+            margin-left: 48px;
+            max-width: 592px;
+            width: 592px;
+            float: left;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-family: PingFangSC-Regular, sans-serif, Microsoft YaHei, SimHei, Tahoma !important;
+            font-weight: 500;
+            margin-bottom: 16px;
+            font-size: 32px;
+            line-height: 48px;
+        }
+
+        #browsers p {
+            margin-bottom: 24px;
+            line-height: 21px;
+        }
+
+        .browser_not_supported-tip {
+            margin-top: 100px;
+            float: left;
+        }
+
+        .browsers-list {
+            height: 141px;
+            float: left;
+            margin-bottom: 16px;
+        }
+
+        .browser {
+            width: 136px;
+            margin: 0 16px 16px 0;
+            background: #f3f3f3;
+            border-radius: 4px;
+            float: left;
+        }
+
+        .browser a {
+            display: block;
+            width: 104px;
+            margin: 16px 16px;
+            color: #0d0d0d;
+            box-sizing: content-box;
+            text-align: center;
+        }
+
+        .browser a:visited {
+            color: #0d0d0d;
+        }
+
+        .browser h3 {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 16px;
+            text-align: center;
+        }
+
+        @media (max-width: 1127px) {
+            #main-content {
+                max-width: 1030px;
+            }
+
+            #art {
+                width: 390px;
+                height: 260px;
+            }
+        }
+
+        @media (max-width: 1069px) {
+            #main-content {
+                position: relative;
+                top: inherit;
+                left: inherit;
+                margin: 0 auto;
+                max-width: 640px;
+                text-align: center;
+            }
+
+            #main-content.gt-four-browsers {
+                margin-top: 0;
+            }
+
+            #browsers {
+                margin-bottom: 24px;
+                margin-left: 0;
+            }
+
+        }
+
+        @media (max-width: 647px) {
+            #main-content {
+                margin: 16px auto;
+                max-width: 440px;
+            }
+
+            #art {
+                width: 360px;
+                height: 240px;
+            }
+
+            .browsers-list {
+                margin-right: -16px;
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 491px) {
+            #main-content {
+                max-width: 288px;
+            }
+
+            h1 {
+                font-size: 32px;
+                line-height: 40px;
+            }
+
+            #art {
+                width: 300px;
+                height: 200px;
+            }
+        }
+
+        #loading-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @-webkit-keyframes rotator {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg)
+            }
+
+            100% {
+                -webkit-transform: rotate(270deg);
+                transform: rotate(270deg);
+                -ms-transform: rotate(360deg)
+            }
+        }
+
+        @keyframes rotator {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg)
+            }
+
+            100% {
+                -webkit-transform: rotate(270deg);
+                transform: rotate(270deg);
+                -ms-transform: rotate(360deg)
+            }
+        }
+
+        #loading-container .spinner {
+            -webkit-animation: rotator 1.4s linear infinite;
+            animation: rotator 1.4s linear infinite;
+        }
+
+        #loading-container .spinner .path {
+            stroke-dasharray: 187;
+            stroke-dashoffset: 50;
+            -webkit-transform-origin: center;
+            transform-origin: center;
+            stroke: #4285F4;
+            -webkit-animation: dash 1.4s ease-in-out infinite;
+            animation: dash 1.4s ease-in-out infinite;
+        }
+    </style>
+    <link rel="stylesheet" href="/static/disk/css/chunk-60e5967e.38e33a11.css">
+    <link rel="stylesheet" href="/static/disk/css/chunk-vendors.31fb5458.css">
+    <link rel="stylesheet" href="/static/disk/css/home.0dfda365.css">
+</head>
+
+<body>
+    <div data-v-9cd13272="" class="nd-main-layout aichat-width">
+        <div class="nd-main-layout__container">
+            <!---->
+            <div>
+                <div class="wp-s-header">
+                    <div class="wp-s-header__left">
+                        <a href="{{ .adderss }}" title="百度网盘" target="" id=""
+                            class="wp-s-header__left-item nd-disk-header__item-logo" pan-host="">
+                            <img src="/static/disk/css/logo.png" alt="百度网盘" class="wp-s-header__item-img"
+                                style="width: 133px;">
+                            <div class="wp-s-header__item-active-bar"></div>
+                            <div class="wp-s-header__item-msg"></div>
+                        </a>
+                    </div>
+                    <div id="top">
+
+                    </div>
+
+                    <div class="wp-s-header__center"></div>
+                    <div class="wp-s-header__right clearfix">
+
+
+
+                        <div class="wp-s-header__right-item">
+                            <span class="is-vip-type-2">
+                                <div role="tooltip" id="u-popover-6032" aria-hidden="true"
+                                    class="u-popover u-popper wp-s-tooltip-no-padding wp-s-header-user__body-userinfo"
+                                    tabindex="0" style="width: 320px; display: none;">
+                                    <!---->
+                                    <div class="wp-s-header-user__drop is-svip">
+                                        <div class="wp-s-header-user__drop-info">
+                                            <div class="wp-s-header-user__drop-info-body">
+                                                <p
+                                                    class="wp-s-header-user__body-username is-drop inline-block-v-middle text-ellip">
+
+                                                </p>
+                                                <a href="https://pan.baidu.com/buy/center?tag=8&amp;from=homepage"
+                                                    target="_blank">
+                                                    <i
+                                                        class="wp-s-header-user__body-vip-icon vipicon inline-block-v-middle vipicon-2-3"></i>
+                                                </a>
+                                            </div>
+                                            <div class="wp-s-header-user__member-status-new-btn-wrap is-svip">
+                                                <div class="wp-s-header-user__member-status-arrow is-续费">
+                                                    <span class="wp-s-header-user__member-status-arrow-nav">续费</span>
+                                                    <i
+                                                        class="wp-s-header-user__member-status-arrow-icon iconfont icon-caret-right"></i>
+                                                </div>
+                                            </div>
+                                            <!---->
+                                        </div>
+                                        <div class="wp-s-header-user__drop-body">
+                                            <div class="wp-s-header-user__member-status is-svip">
+                                                <span
+                                                    class="wp-s-header-user__member-status-desc">超级会员至：2023-10-03</span>
+                                            </div>
+
+                                            <div class="wp-s-header-user__drop-channel">
+                                                <a href="https://pan.baidu.com/disk/cert?form=personal&amp;from=web_UserCr#/team/create"
+                                                    target="_blank" class="wp-s-header-user__channel-item cursor-p">
+                                                    <div
+                                                        class="wp-s-header-user__channel-item-left inline-block-v-middle">
+                                                        <img src="./static/disk/logo.png" alt=""
+                                                            class="wp-s-header-user__channel-item-img inline-block-v-middle">
+                                                        <div
+                                                            class="wp-s-header-user__channel-item-content inline-block-v-middle">
+                                                            <p class="wp-s-header-user__channel-item-title">创建企业/团队</p>
+                                                            <p class="wp-s-header-user__channel-item-desc">3人团队，共享协作更高效
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="wp-s-header-user__channel-item-right">
+                                                        <i
+                                                            class="iconfont icon-caret-right wp-s-header-user__channel-item-right-icon"></i>
+                                                    </div>
+                                                </a>
+                                                <a href="https://pan.baidu.com/buy/workspace/commodity?form=personal&amp;from=web_UserCr"
+                                                    target="_blank" class="wp-s-header-user__channel-item cursor-p">
+                                                    <div
+                                                        class="wp-s-header-user__channel-item-left inline-block-v-middle">
+                                                        <img src="https://staticsns.cdn.bcebos.com/amis/2021-9/1631520047676/%E5%A5%97%E9%A4%90.png"
+                                                            alt=""
+                                                            class="wp-s-header-user__channel-item-img inline-block-v-middle">
+                                                        <div
+                                                            class="wp-s-header-user__channel-item-content inline-block-v-middle">
+                                                            <p class="wp-s-header-user__channel-item-title">开通企业套餐</p>
+                                                            <p class="wp-s-header-user__channel-item-desc">
+                                                                可享20T极速空间等超多特权</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="wp-s-header-user__channel-item-right">
+                                                        <i
+                                                            class="iconfont icon-caret-right wp-s-header-user__channel-item-right-icon"></i>
+                                                    </div>
+                                                </a>
+                                                <a href="https://pan.baidu.com/disk/cert?form=personal&amp;from=web_UserCr#/web/submit"
+                                                    target="_blank" class="wp-s-header-user__channel-item cursor-p">
+                                                    <div
+                                                        class="wp-s-header-user__channel-item-left inline-block-v-middle">
+                                                        <img src=" https://staticsns.cdn.bcebos.com/amis/2021-9/1631520064569/%E8%AE%A4%E8%AF%81.png"
+                                                            alt=""
+                                                            class="wp-s-header-user__channel-item-img inline-block-v-middle">
+                                                        <div
+                                                            class="wp-s-header-user__channel-item-content inline-block-v-middle">
+                                                            <p class="wp-s-header-user__channel-item-title">完成网盘认证</p>
+                                                            <p class="wp-s-header-user__channel-item-desc">可享企业专属身份标识等特权
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="wp-s-header-user__channel-item-right">
+                                                        <i
+                                                            class="iconfont icon-caret-right wp-s-header-user__channel-item-right-icon"></i>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="wp-s-header-user__drop-nav-list">
+                                            <div class="wp-s-header-user__nav-item inline-block-v-middle">
+                                                <div class="wp-s-header-user__nav-item-divider inline-block-v-middle">
+                                                </div>
+                                                <a href="https://passport.baidu.com/center" target="_blank"
+                                                    class="wp-s-header-user__nav-item-content inline-block-v-middle">个人主页</a>
+                                            </div>
+                                            <div class="wp-s-header-user__nav-item inline-block-v-middle">
+                                                <div class="wp-s-header-user__nav-item-divider inline-block-v-middle">
+                                                </div>
+                                                <a href="https://help.baidu.com/question?prod_id=29" target="_blank"
+                                                    class="wp-s-header-user__nav-item-content inline-block-v-middle">帮助中心</a>
+                                            </div>
+                                            <div class="wp-s-header-user__nav-item inline-block-v-middle">
+                                                <div class="wp-s-header-user__nav-item-divider inline-block-v-middle">
+                                                </div>
+                                                <a href="javascript:;"
+                                                    class="wp-s-header-user__nav-item-content inline-block-v-middle">退出登录</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="u-popover__reference-wrapper">
+                                    <div class="wp-s-header-user u-popover__reference" aria-describedby="u-popover-6032"
+                                        tabindex="0">
+                                        <div class="wp-s-header-user__body">
+                                            <img src="/static/disk/logo.jpg"
+                                                class="wp-s-header-user__body-avatar inline-block-v-middle wp-s-header-user__body-avatar-vip">
+                                            <div class="wp-s-header-user__body-vip-cont">
+                                                <a id="ppter_img" href="{{.address}}" target="_blank">
+
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </span>
+                            <!---->
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="u-dialog__wrapper nd-dialog-common-header" style="display: none;">
+                    <div role="dialog" aria-modal="true" aria-label="提示" class="u-dialog u-dialog__mini"
+                        style="top: 30vh; width: 464px;">
+                        <div class="u-dialog__header">
+                            <span class="u-dialog__title">提示</span>
+                            <button type="button" aria-label="Close" class="u-dialog__headerbtn">
+                                <i class="u-dialog__close u-icon u-icon-close"></i>
+                            </button>
+                        </div>
+                        <!---->
+                        <div class="u-dialog__footer">
+                            <div class="nd-dialog-footer-center nd-dialog-common-footer">
+                                <button type="button"
+                                    class="u-button nd-second-primary-btn nd-btn-fix-size-middle u-button--week u-button--medium is-round">
+                                    <!---->
+                                    <!---->
+                                    <span>取消</span>
+                                </button>
+                                <button type="button"
+                                    class="u-button nd-btn-fix-size-middle u-button--primary u-button--medium is-round">
+                                    <!---->
+                                    <!---->
+                                    <span>确定</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="u-dialog__wrapper nd-dialog-common-header nd-dialog-workspace--bg" style="display: none;">
+                    <div role="dialog" aria-modal="true" aria-label="dialog" class="u-dialog u-dialog__mini"
+                        style="top: 30vh; width: 752px;">
+                        <div class="u-dialog__header">
+                            <span class="u-dialog__title"></span>
+                            <button type="button" aria-label="Close" class="u-dialog__headerbtn">
+                                <i class="u-dialog__close u-icon u-icon-close"></i>
+                            </button>
+                        </div>
+                        <!---->
+                        <div class="u-dialog__footer">
+                            <div class="nd-dialog-footer-center nd-dialog-common-footer">
+                                <div class="nd-dialog-cert__go-cert">
+                                    立即查看
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="u-dialog__wrapper nd-dialog-common-header" style="display: none;">
+                    <div role="dialog" aria-modal="true" aria-label="提示" class="u-dialog u-dialog__mini"
+                        style="top: 30vh; width: 427px;">
+                        <div class="u-dialog__header">
+                            <span class="u-dialog__title">提示</span>
+                            <button type="button" aria-label="Close" class="u-dialog__headerbtn">
+                                <i class="u-dialog__close u-icon u-icon-close"></i>
+                            </button>
+                        </div>
+                        <!---->
+                        <div class="u-dialog__footer">
+                            <div class="nd-dialog-footer-center nd-dialog-common-footer">
+                                <button type="button"
+                                    class="u-button nd-second-primary-btn nd-btn-fix-size-middle u-button--week u-button--medium is-round">
+                                    <!---->
+                                    <!---->
+                                    <span>取消</span>
+                                </button>
+                                <button type="button"
+                                    class="u-button nd-btn-fix-size-middle u-button--primary u-button--medium is-round">
+                                    <!---->
+                                    <!---->
+                                    <span>确定</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nd-main-layout__wrapper">
+                <div class="nd-aside-wp-block">
+                    <div class="wp-s-aside-nav">
+                        <div class="wp-s-aside-nav__main">
+                            <div class="wp-s-aside-nav__main-top">
+                                <a href="javascript:;" aria-current="page"
+                                    class="u-tooltip item wp-s-aside-nav__main-item router-link-exact-active is-active wp-s-aside-nav__main-item is-active"
+                                    title="" target="" main-bg="" synclink="https://pan.baidu.com/disk/synchronization"
+                                    aria-describedby="u-tooltip-6246" tabindex="0">
+                                    <div class="wp-s-aside-nav__main-item-wrap">
+                                        <!---->
+                                        <img src="data:image/png;base64,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"
+                                            alt="" class="wp-s-aside-nav__main-item-img">
+
+
+                                        <!---->
+                                        <svg alt="" class="wp-s-aside-nav__main-item-img is-active-img"
+                                            t="1689056891651" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                            xmlns="http://www.w3.org/2000/svg" p-id="917" width="200" height="200">
+                                            <path
+                                                d="M159.665924 335.567703l267.681407-148.915425L782.68434 368.559922 511.229247 507.11523 159.665924 335.567703z"
+                                                fill="#FC8D8D" p-id="918"></path>
+                                            <path
+                                                d="M508.806882 546.673861a27.406764 27.406764 0 0 1-12.592297-3.062991l-362.353862-186.752375a27.476833 27.476833 0 0 1-0.180176-48.767625L496.044418 118.115347a27.556911 27.556911 0 0 1 25.354761-0.090088l368.700059 189.965513a27.486843 27.486843 0 0 1-0.180176 48.957811L521.219003 543.700958a27.536891 27.536891 0 0 1-12.412121 2.972903zM206.081251 332.234448l302.835738 156.082424 308.170948-156.082424L508.916989 173.469404z"
+                                                fill="#333333" p-id="919"></path>
+                                            <path
+                                                d="M508.806882 736.599335a27.526882 27.526882 0 0 1-12.592297-3.002932l-362.353862-186.742366a27.476833 27.476833 0 1 1 25.174585-48.847703l349.881681 180.246022 356.17783-180.396168a27.476833 27.476833 0 1 1 24.824243 49.047898L521.219003 733.636442a27.526882 27.526882 0 0 1-12.412121 2.962893z"
+                                                fill="#333333" p-id="920"></path>
+                                            <path
+                                                d="M508.806882 908.977674a27.396755 27.396755 0 0 1-12.592297-3.093021l-362.353862-186.752375a27.476833 27.476833 0 1 1 25.174585-48.847703L508.916989 850.630694l356.17783-180.406178a27.476833 27.476833 0 1 1 24.824243 49.047898L521.219003 906.01478a27.486843 27.486843 0 0 1-12.412121 2.962894z"
+                                                fill="#333333" p-id="921"></path>
+                                        </svg>
+                                        <p class="wp-s-aside-nav__main-item-text text-ellip">
+                                            首页
+                                        </p>
+                                        <!---->
+                                    </div>
+                                </a>
+
+                                <a href="{{.adderss}}/admin"
+                                    class="u-tooltip item wp-s-aside-nav__main-item wp-s-aside-nav__main-item" title=""
+                                    target="" main-bg="" synclink="https://pan.baidu.com/disk/synchronization"
+                                    aria-describedby="u-tooltip-2740" tabindex="0">
+                                    <div class="wp-s-aside-nav__main-item-wrap">
+                                        <!---->
+
+                                        <!---->
+                                        <svg class="wp-s-aside-nav__main-item-img" t="1689057053420" class="icon"
+                                            viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                            p-id="1063" width="200" height="200">
+                                            <path
+                                                d="M118.075308 913.762346H720.103226L651.35609 693.577322l-254.558592-77.115308-161.657869 49.238084-99.417087 140.297009-17.647234 107.765239z"
+                                                fill="#FC8D8D" p-id="1064"></path>
+                                            <path
+                                                d="M420.580723 115.112414c115.512805 0 209.204301 93.581388 209.204301 209.084184v0.120118c0 115.512805-93.571378 209.154252-209.084183 209.204301h-0.090088c-115.552845 0-209.174272-93.671476-209.174272-209.204301s93.631437-209.204301 209.144242-209.204302z m0 362.073588A152.939355 152.939355 0 1 0 267.641369 324.316716a153.14956 153.14956 0 0 0 152.939354 152.909325z"
+                                                fill="#333333" p-id="1065"></path>
+                                            <path
+                                                d="M717.000196 922.190577a28.157498 28.157498 0 0 1-28.107449-28.157498C688.76262 752.444809 573.990538 637.622678 432.422287 637.482542h-23.58303c-141.638319 0.180176-256.400391 114.962268-256.540528 256.600586a28.147488 28.147488 0 0 1-56.204887 0c-0.130127-172.608563 139.686413-312.655327 312.304985-312.795464h24.02346c172.608563-0.140137 312.655327 139.676403 312.795465 312.304985v0.500489a28.167507 28.167507 0 0 1-28.097439 28.157497z"
+                                                fill="#333333" p-id="1066"></path>
+                                            <path
+                                                d="M667.311672 504.87304a28.147488 28.147488 0 0 1-10.109873-54.353079 152.929345 152.929345 0 0 0-27.026393-293.166295 28.147488 28.147488 0 0 1 10.109873-55.324028c113.570909 20.93044 188.75433 130.01697 167.803871 243.647938a209.014115 209.014115 0 0 1-130.757693 157.353665 28.02737 28.02737 0 0 1-10.019785 1.841799z"
+                                                fill="#333333" p-id="1067"></path>
+                                            <path
+                                                d="M899.758671 922.240626a28.157498 28.157498 0 0 1-28.157498-28.107449A305.818651 305.818651 0 0 0 684.668622 611.927586a28.107449 28.107449 0 0 1 21.881368-51.750538A362.514018 362.514018 0 0 1 927.906158 894.103148a28.147488 28.147488 0 0 1-28.147487 28.107448z"
+                                                fill="#333333" p-id="1068"></path>
+                                        </svg>
+                                        <svg class="wp-s-aside-nav__main-item-img is-active-img" t="1689057053420"
+                                            class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                            xmlns="http://www.w3.org/2000/svg" p-id="1063" width="200" height="200">
+                                            <path
+                                                d="M118.075308 913.762346H720.103226L651.35609 693.577322l-254.558592-77.115308-161.657869 49.238084-99.417087 140.297009-17.647234 107.765239z"
+                                                fill="#FC8D8D" p-id="1064"></path>
+                                            <path
+                                                d="M420.580723 115.112414c115.512805 0 209.204301 93.581388 209.204301 209.084184v0.120118c0 115.512805-93.571378 209.154252-209.084183 209.204301h-0.090088c-115.552845 0-209.174272-93.671476-209.174272-209.204301s93.631437-209.204301 209.144242-209.204302z m0 362.073588A152.939355 152.939355 0 1 0 267.641369 324.316716a153.14956 153.14956 0 0 0 152.939354 152.909325z"
+                                                fill="#333333" p-id="1065"></path>
+                                            <path
+                                                d="M717.000196 922.190577a28.157498 28.157498 0 0 1-28.107449-28.157498C688.76262 752.444809 573.990538 637.622678 432.422287 637.482542h-23.58303c-141.638319 0.180176-256.400391 114.962268-256.540528 256.600586a28.147488 28.147488 0 0 1-56.204887 0c-0.130127-172.608563 139.686413-312.655327 312.304985-312.795464h24.02346c172.608563-0.140137 312.655327 139.676403 312.795465 312.304985v0.500489a28.167507 28.167507 0 0 1-28.097439 28.157497z"
+                                                fill="#333333" p-id="1066"></path>
+                                            <path
+                                                d="M667.311672 504.87304a28.147488 28.147488 0 0 1-10.109873-54.353079 152.929345 152.929345 0 0 0-27.026393-293.166295 28.147488 28.147488 0 0 1 10.109873-55.324028c113.570909 20.93044 188.75433 130.01697 167.803871 243.647938a209.014115 209.014115 0 0 1-130.757693 157.353665 28.02737 28.02737 0 0 1-10.019785 1.841799z"
+                                                fill="#333333" p-id="1067"></path>
+                                            <path
+                                                d="M899.758671 922.240626a28.157498 28.157498 0 0 1-28.157498-28.107449A305.818651 305.818651 0 0 0 684.668622 611.927586a28.107449 28.107449 0 0 1 21.881368-51.750538A362.514018 362.514018 0 0 1 927.906158 894.103148a28.147488 28.147488 0 0 1-28.147487 28.107448z"
+                                                fill="#333333" p-id="1068"></path>
+                                        </svg>
+
+                                        <p class="wp-s-aside-nav__main-item-text text-ellip">
+                                            管理
+                                        </p>
+
+                                    </div>
+                                </a>
+                                <!---->
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!---->
+                </div>
+                <div class="nd-main-layout__body">
+
+                    <div data-v-9cd13272="" class="nd-new-main-list">
+                        <div class="wp-s-core-pan">
+                            <div class="wp-s-core-pan__contain  is-undefined-skin">
+                                <div class="wp-s-core-pan__body is-show-header">
+                                    <div class="wp-s-core-pan__body-contain is-show-detail is-has-detail">
+                                        <div class="wp-s-core-pan__body-contain--nav">
+                                            <div class="wp-s-pan-file-main__nav list">
+                                                <div class="wp-s-pan-file-main__nav-left">
+                                                    <div id="TopFileAdd">
+                                                        <span id="TopFileAddAll" class="title">
+                                                            全部文件
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="wp-s-pan-file-main__nav-right"><span
+                                                        class="wp-s-pan-file-main__nav-right-count">
+
+                                                    </span> <span
+                                                        class="wp-disk-popover-card-event__ref is-mode-pop is-web is-person is-default"><span
+                                                            class="u-popover__reference-wrapper"><span
+                                                                class="cursor-p wp-s-pan-file-main__nav-right-icon is-large inline-block-v-middle u-uicon u-popover__reference"
+                                                                aria-describedby="u-popover-3063" tabindex="0"><i
+                                                                    class="u-uicon__font u-icon-view-list"></i></span>
+                                                        </span></span></div> <!---->
+                                            </div>
+                                        </div>
+                                        <div class="wp-s-core-pan__body-contain--list is-show-nav">
+                                            <div class="wp-s-pan-list s-pan-list-loading">
+                                                <div class="wp-s-pan-list__contain">
+                                                    <div class="wp-s-pan-table is-show-header">
+                                                        <div class="wp-s-pan-table__header">
+                                                            <table class="wp-s-pan-table__header-table">
+                                                                <colgroup>
+                                                                    <col width="8%">
+                                                                    <col width="45%">
+                                                                    <col width="23%">
+                                                                    <col width="22%">
+                                                                </colgroup>
+                                                                <thead>
+                                                                    <tr class="wp-s-pan-table__header-row">
+                                                                        <th class="wp-s-pan-table__header-select"><label
+                                                                                class="u-checkbox"><span
+                                                                                    class="u-checkbox__input"></span><!----></label>
+                                                                        </th>
+                                                                        <th
+                                                                            class="wp-s-pan-table__header-th cursor-p is-name">
+                                                                            <div
+                                                                                class="text-ellip content inline-block-v-middle">
+                                                                                <span>文件名</span> <!---->
+                                                                                <div class="wp-s-pan-table__sort"><i
+                                                                                        class="iconfont icon icon-arrow-up"
+                                                                                        style="display: none;"></i><i
+                                                                                        class="iconfont icon active icon-arrow-down"
+                                                                                        style="display: none;"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </th>
+                                                                        <th class="wp-s-pan-table__header-th cursor-p">
+                                                                            <div
+                                                                                class="text-ellip content inline-block-v-middle">
+                                                                                <span>修改时间</span> <!---->
+
+                                                                            </div>
+                                                                        </th>
+                                                                        <th class="wp-s-pan-table__header-th cursor-p">
+                                                                            <div
+                                                                                class="text-ellip content inline-block-v-middle">
+                                                                                <span>大小</span> <!---->
+                                                                                <div class="wp-s-pan-table__sort"><i
+                                                                                        class="iconfont icon icon-arrow-up"
+                                                                                        style="display: none;"></i><i
+                                                                                        class="iconfont icon active icon-arrow-down"
+                                                                                        style="display: none;"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                            </table>
+                                                        </div>
+                                                        <div class="wp-s-pan-table__body mouse-choose-list">
+                                                            <table class="wp-s-pan-table__body-table mouse-choose-box">
+                                                                <colgroup>
+                                                                    <col width="8%">
+                                                                    <col width="45%">
+                                                                    <col width="23%">
+                                                                    <col width="22%">
+                                                                </colgroup>
+                                                                <tbody id="topmain">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                </tbody>
+                                                            </table> <!---->
+                                                        </div> <!----> <!---->
+                                                    </div> <!----> <!---->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="wp-s-core-pan__body-detail">
+                                        <div class="wp-s-core-pan__detail-slot">
+                                            <section data-v-093a1112="" class="nd-detail nd-new-main-list__detail">
+                                                <div data-v-093a1112="" class="nd-detail__title"><span
+                                                        data-v-093a1112="">
+                                                        文件详情
+                                                    </span></div><!----><!----><!---->
+                                                <div id="showfile">
+                                                    <div data-v-093a1112="" class="nd-detail__empty"><img
+                                                            data-v-093a1112=""
+                                                            src="https://nd-static.bdstatic.com/m-static/v20-main/home/img/empty-folder-new.ce4801de.png"
+                                                            class="img">
+                                                        <p data-v-093a1112="">选中文件/文件夹，查看详情</p>
+                                                    </div>
+                                                    <div data-v-093a1112=""><!----></div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="wp-s-core-pan__footer"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <!---->
+
+    <!---->
+    <div class="nd-upload">
+        <div class="u-dialog__wrapper nd-dialog-common-header" id="uploaderConfirmDialog" style="display: none;">
+            <div role="dialog" aria-modal="true" aria-label="dialog" class="u-dialog u-dialog__mini"
+                style="top: 30vh; width: 440px;">
+                <div class="u-dialog__header">
+                    <span class="u-dialog__title"></span>
+                    <button type="button" aria-label="Close" class="u-dialog__headerbtn">
+                        <i class="u-dialog__close u-icon u-icon-close"></i>
+                    </button>
+                </div>
+                <!---->
+                <div class="u-dialog__footer">
+                    <div class="nd-dialog-footer-center nd-dialog-common-footer">
+                        <!---->
+                        <button type="button"
+                            class="u-button nd-btn-fix-size-middle u-button--primary u-button--medium is-round">
+                            <!---->
+                            <!---->
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="upload-drag_canvas-0" class="upload-drag_tip">上传文件到当前目录下</div>
+    </div>
+
+    <div>
+        <div class="httpProxy-container" style="position:absolute;top:-9999px;">
+            <div id="httpProxy" class="httpProxy" style="visibility: visible;"></div>
+        </div>
+    </div>
+
+    <div class="ctx-menu-container" style="top: 0px; left: 0px; display: none;">
+        <div class="wp-s-ctx-menu"></div>
+    </div>
+    <div class="ctx-menu-container" style="top: 0px; left: 0px; display: none;">
+        <div class="wp-s-ctx-menu"></div>
+    </div>
+    <div class="ctx-menu-container" style="top: 0px; left: 0px; display: none;">
+        <div class="wp-s-ctx-menu"></div>
+    </div>
+    <div class="ctx-menu-container" style="top: 0px; left: 0px; display: none;">
+        <div class="wp-s-ctx-menu"></div>
+    </div>
+
+    <div class="ctx-menu-container" style="top: 0px; left: 0px; display: none;">
+        <div class="wp-s-ctx-menu">
+            <div class="wp-s-ctx-menu__item-separate"></div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">获取临时通行证</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- 模态框内容 -->
+                <div class="modal-body">
+                    <div class="card">
+                        <div id="html_token" class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">关闭</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="getppter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">申请成为ppt创作者</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- 模态框内容 -->
+                <div class="modal-body">
+
+                    <div class="col-md-6">
+                        <label for="inputEmail4" class="form-label">邮箱</label>
+                        <input id="getppterform_email" type="email" class="form-control" id="inputEmail4" name="email">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputPassword4" class="form-label">新密码</label>
+                        <input id="getppterform_pwd" type="password" class="form-control" id="inputPassword4"
+                            name="pwd">
+                    </div>
+                    <div class="col-12">
+                        <label for="inputAddress" class="form-label">ppter姓名</label>
+                        <input id="getppterform_name" type="text" class="form-control" id="inputAddress" placeholder=""
+                            name="name">
+                    </div>
+                    <div class="col-12">
+                        <label for="inputAddress" class="form-label">个人介绍</label>
+                        <textarea id="getppterform_msg" class="form-control" rows="5" name="msg"></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <button onclick="getppter()" class="btn btn-primary">提交申请</button>
+                    </div>
+
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">关闭</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">登录ppter</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- 模态框内容 -->
+                <div class="modal-body">
+                    <div class="col-md-6">
+                        <label for="inputEmail4" class="form-label">邮箱</label>
+                        <input id="lognppterform_email" type="email" class="form-control" id="inputEmail4" name="email">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputPassword4" class="form-label">新密码</label>
+                        <input id="loginppterform_pwd" type="password" class="form-control" id="inputPassword4"
+                            name="pwd">
+                    </div>
+                    <div class="col-12">
+                        <label for="inputAddress" class="form-label">ppter姓名</label>
+                        <input id="loginppterform_name" type="text" class="form-control" id="inputAddress"
+                            placeholder="" name="name">
+                    </div>
+                    <div class="col-12">
+                        <button onclick="login_ppter()" class="btn btn-primary">Login</button>
+                    </div>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">关闭</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="d_token" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div id="ip_token_div" class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">请输入通行证</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- 模态框内容 -->
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span id="token_num" class="input-group-text" id="basic-addon1">5</span>
+                        <input id="ip_token" type="text" class="form-control" placeholder="token" aria-label="通行证"
+                            aria-describedby="basic-addon1">
+                    </div>
+                    <button id="go_token" type="button" class="btn btn-primary">下载</button>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">关闭</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="mkdir" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">请输入您要创建的文件名</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- 模态框内容 -->
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">dir</span>
+                        <input id="ip_mkdir" type="text" class="form-control" placeholder="文件夹名称" aria-label="通行证"
+                            aria-describedby="basic-addon1">
+                    </div>
+                    <button onclick="mkdir()" type="button" class="btn btn-primary">创建</button>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">关闭</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="err" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div id="err_div" class="modal-dialog modal-dialog-centered">
+
+
+
+
+
+
+        </div>
+    </div>
+    <div class="modal fade" id="up_file" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div id="ip_token_div" class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateImgModal-staticBackdropLabel">请上传新图片</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mx-3">
+                        <!-- 图片类型：gif、png、jpeg -->
+                        <input type="file" id="new-img" name="new_img" class="form-control mb-2" placeholder="支持所有文件">
+                        <span class="text-secondary text-opacity-50">
+                            <i class="fa fa-volume-down"></i>
+                            支持所有文件
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <!--执行上传操作，并关闭模态框-->
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        onclick="uploadNewImg()">上传</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="position-fixed top-50 start-50 translate-middle p-3" style="z-index: 11">
+        <div id="info-toast" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <!--成功信息-->
+                    <span id="toast-info-success" class="text-success"></span>
+                    <!--失败信息-->
+                    <span id="toast-info-error" class="text-danger"></span>
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    
+
+    <div class="position-fixed p-3 top-0 start-50 translate-middle-x" style="z-index: 100000">
+        <div id="liveToast" class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive"
+            aria-atomic="true" data-bs-delay="3000">
+            <div class="d-flex">
+                <div class="toast-body" id="Err_p">
+                 
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<script src="/static/jquery.form.js"></script>
+<script src="/static/bootstrap.js"></script>
+<script src="/static/code.jquery.com_jquery-3.7.0.min.js"></script>
+
+
+<script>
+    let z = "{{ .add }}"
+    let ym = "{{ .ym_add}}"
+    sj = false
+    let pptShow = 'https://ow365.cn/?i=32118&furl='
+
+    
+    
+     
+    
+
+
+
+    /* 当用户点击按钮时，
+在隐藏和显示下拉内容之间切换 */
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // 如果用户在下拉菜单之外点击，则关闭下拉菜单
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
+</script>
+
+
+<script src="/static/disk/index.js"></script>
+
+</html>
+{{end}}
