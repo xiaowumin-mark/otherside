@@ -25,6 +25,4 @@ conf.json为配置文件
 
 在static/disk/exe文件夹中为彼方云盘客户端的源文件（electron）
 
-[github地址](https://github.com/xiaowumin-mark/otherside-code)
-
-
+[github地址](https://github.com/xiaowumin-mark/otherside-cloud)
